@@ -20,9 +20,9 @@ export const addPlace = (title, image, location) => {
       throw new Error('Something went wrong!');
     }
 
+    const address = resData.results[0].formatted_address;
     const fileName = image.split('/').pop();
     const newPath = FileSystem.documentDirectory + fileName;
-    const address = resData.results[0].formatted_address;
 
     try {
       await FileSystem.moveAsync({
@@ -36,6 +36,7 @@ export const addPlace = (title, image, location) => {
         location.lat,
         location.lng
       );
+
       console.log(dbResult);
       dispatch({
         type: ADD_PLACE,
