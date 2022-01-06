@@ -18,7 +18,7 @@ const NewPlaceScreen = props => {
   const dispatch = useDispatch();
 
   const titleChangeHandler = text => {
-    setTitleValue(text.trim());
+    setTitleValue(text);
   };
 
   const imageTakenHandler = imagePath => {
