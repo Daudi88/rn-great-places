@@ -3,7 +3,11 @@ import Colors from '../constants/Colors';
 
 const PlaceItem = props => {
   return (
-    <TouchableOpacity onPress={props.onSelect} style={styles.placeItem}>
+    <TouchableOpacity
+      onPress={props.onSelect}
+      onLongPress={props.onDelete}
+      style={styles.placeItem}
+    >
       <Image style={styles.image} source={{ uri: props.image }} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{props.title}</Text>

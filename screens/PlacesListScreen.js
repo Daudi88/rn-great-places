@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import PlaceItem from '../components/PlaceItem';
+import { deletePlace } from '../helpers/db';
 import * as placesActions from '../store/places-actions';
 
 const PlacesListScreen = props => {
@@ -13,6 +14,20 @@ const PlacesListScreen = props => {
   useEffect(() => {
     dispatch(placesActions.loadPlaces());
   }, [dispatch]);
+
+  const deletePlaceHandler = id => {
+    Alert.alert('Delete', 'Do you really want to delete this place?', [
+      { text: 'No' },
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: () => {
+          deletePlace(id);
+          dispatch(placesActions.loadPlaces());
+        },
+      },
+    ]);
+  };
 
   return (
     <FlatList
@@ -25,6 +40,7 @@ const PlacesListScreen = props => {
           onSelect={() => {
             props.navigation.navigate('PlaceDetail', { place: itemData.item });
           }}
+          onDelete={() => deletePlaceHandler(itemData.item.id)}
         />
       )}
     />
